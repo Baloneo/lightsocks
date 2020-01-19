@@ -36,9 +36,11 @@ func (lsServer *LsServer) Listen(didListen func(listenAddr net.Addr)) error {
 	return ListenSecureTCP(lsServer.ListenAddr, lsServer.Cipher, lsServer.handleConn, didListen)
 }
 
+// 打开一个网页对应一个或多个连接
 // 解 SOCKS5 协议
 // https://www.ietf.org/rfc/rfc1928.txt
 func (lsServer *LsServer) handleConn(localConn *SecureTCPConn) {
+	// localConn 就是每个网页打开的连接
 	defer localConn.Close()
 	buf := make([]byte, 256)
 
